@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Haunted Room</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+      cursor: url('./Assets/cursor/cursedcursor.cur'), auto;
+    }
+
+    a:hover, button:hover,
+    #stairs:hover, #mirror:hover, #bathroom:hover {
+      cursor: url('./Assets/cursor/cursedhover.cur'), pointer;
+      opacity: 0.8;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .room {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hotspot, #stairs {
+      position: absolute;
+    }
+
+    #stairs {
+      right: 0;
+      bottom: 0;
+      width: 30%;
+      height: 50%;
+    }
+
+    #mirror {
+      top: 25%;
+      left: 5%;
+      width: 12%;
+      height: 30%;
+    }
+
+    #bathroom {
+      top: 20%;
+      left: 30%;
+      width: 10%;
+      height: 35%;
+    }
+
+    .jumpscare-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 10;
+      display: none;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="./Assets/images/haunted-room.jpg" class="room" alt="Haunted Room">
+    
+    <!-- Clickable areas -->
+    <div id="stairs" onclick="goUpstairs()"></div>
+    <div id="mirror" class="hotspot" onclick="triggerJumpscare('mirror')"></div>
+    <div id="bathroom" class="hotspot" onclick="triggerJumpscare('bathroom')"></div>
+
+    <!-- Jumpscare images -->
+    <img id="mirror-jumpscare" class="jumpscare-img" src="./Assets/images/jump.jpeg" alt="Mirror Jumpscare">
+    <img id="bathroom-jumpscare" class="jumpscare-img" src="./Assets/images/bathjump (1).jpg" alt="Bathroom Jumpscare">
+
+    <!-- Audio -->
+    <audio id="bg-audio" loop>
+      <source src="./Assets/Sounds/ambience.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="mirror-audio">
+      <source src="./Assets/Sounds/mirrorsound (mp3cut.net) (1).mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bathroom-audio1">
+      <source src="./Assets/Sounds/door-slam-79889.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bathroom-audio2">
+      <source src="./Assets/Sounds/bathjumpsound.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const bgAudio = document.getElementById("bg-audio");
+    const mirrorImg = document.getElementById("mirror-jumpscare");
+    const bathroomImg = document.getElementById("bathroom-jumpscare");
+    const mirrorAudio = document.getElementById("mirror-audio");
+    const bathroomAudio1 = document.getElementById("bathroom-audio1");
+    const bathroomAudio2 = document.getElementById("bathroom-audio2");
+
+    // Ensure audio plays on first user interaction
+    document.addEventListener("click", () => {
+      bgAudio.volume = 0.4;
+      bgAudio.play().catch(() => {});
+    }, { once: true });
+
+    function triggerJumpscare(type) {
+      if (type === "mirror") {
+        mirrorImg.style.display = "block";
+        mirrorAudio.play();
+        setTimeout(() => {
+          mirrorImg.style.display = "none";
+        }, 1500);
+      } else if (type === "bathroom") {
+        bathroomImg.style.display = "block";
+        bathroomAudio1.play();
+        setTimeout(() => {
+          bathroomAudio2.play();
+        }, 400);
+        setTimeout(() => {
+          bathroomImg.style.display = "none";
+        }, 1500);
+      }
+    }
+
+    function goUpstairs() {
+      window.location.href = "upstairs.html";
+    }
+  </script>
+</body>
+</html>

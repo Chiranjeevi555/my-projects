@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Haunted Manor</title>
+
+  <style>
+    body {
+      text-align: center;
+      color: whitesmoke;
+      font-family: 'UnifrakturCook';
+      background-color: black;
+      height: 100vh;
+      background-image: url('./Assets/images/background.jpg'); 
+      background-size: cover;
+      margin: 0;
+      cursor: url('./Assets/cursor/cursedcursor.cur'), auto;
+      
+    }
+
+    a:hover, button:hover {
+      cursor: url('./Assets/cursor/cursedhover.cur'), pointer;
+    }
+
+    .heading {
+      text-align: center;
+      color: whitesmoke;
+      font-size: 3em;
+      margin-top: 20px;
+    }
+
+    .door {
+        position: relative; /* needed for z-index */
+        z-index: 10;
+        width: 300px;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+        margin-top: 40px;
+      }
+
+    .door:hover {
+      transform: scale(1.05);
+       cursor: url('./Assets/cursor/cursedhover.cur'), pointer;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 5; 
+      pointer-events: none; 
+    }
+
+    .startB {  
+      color: whitesmoke;
+      background-color: black;
+      font-family: 'UnifrakturCook';
+      border: 2px solid whitesmoke;
+      border-radius: 30px;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      margin-top: 30px;
+      transition: background-color 1s;
+        color: 1s;
+    }
+    .startB:hover{
+      color:black;
+      background-color:whitesmoke ;
+      border-radius: 30px;
+      border: 2px solid black;
+    }
+    .startB:active{
+      color: rgba(204, 6, 6, 0.909);
+
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="heading">The Haunted Manor</h1>
+  <div class="overlay"></div>
+
+  <img src="./Assets/images/door.jpg" alt="Haunted Door" class="door" onclick="enterRoom()">
+
+  <!-- AUDIO: Use relative path, NOT C:/... -->
+  <audio id="bg-audio" loop>
+    <source src="./Assets/sounds/ambience.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <br>
+  <button onclick="startAmbience()" class="startB">Sound</button>
+
+  <script>
+    function startAmbience() {
+      const audio = document.getElementById("bg-audio");
+      audio.volume = 0.3;
+      audio.play().catch(err => {
+        console.log("Autoplay blocked. User interaction required.");
+      });
+    }
+
+    function enterRoom() {
+      window.location.href = 'haunted-room.html';
+    }
+  </script>
+</body>
+</html>

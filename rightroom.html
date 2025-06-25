@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Right Room</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      cursor: url("./Assets/cursor/cursedcursor.cur"), auto;
+    }
+
+    #right-room {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background: url("./Assets/images/rightroom.jpg") no-repeat center center;
+      background-size: cover;
+    }
+
+    #girl {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 65vh;
+      z-index: 10;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    #girl:hover {
+      
+      cursor: url('./Assets/cursor/cursedhover.cur'), pointer;
+    }
+
+    #jumpscare {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <div id="right-room">
+    <img id="girl" src="./Assets/images/girl-removebg-preview.png" alt="Ghost Girl"/>
+    <img id="jumpscare" src="./Assets/images/jumpscare rr.jpg" alt="Jumpscare"/>
+
+    <audio id="ambience" src="./Assets/Sounds/ambience.mp3" autoplay loop></audio>
+    <audio id="doorslam" src="./Assets/Sounds/door-slam-79889.mp3"></audio>
+    <audio id="scream" src="./Assets/Sounds/girl-scream-45657.mp3"></audio>
+  </div>
+
+  <script>
+    // Play door slam on load
+    window.onload = () => {
+      const door = document.getElementById("doorslam");
+      door.play();
+    };
+
+    const girl = document.getElementById("girl");
+    const jumpscare = document.getElementById("jumpscare");
+    const scream = document.getElementById("scream");
+
+    girl.addEventListener("click", () => {
+      jumpscare.style.display = "block";
+      scream.play();
+
+      setTimeout(() => {
+        jumpscare.style.display = "none";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

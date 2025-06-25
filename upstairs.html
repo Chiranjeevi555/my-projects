@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Haunted Manor - First Floor</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      overflow: hidden;
+      cursor: url('./Assets/cursor/cursedcursor.cur'), auto;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .floor {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hotspot {
+      position: absolute;
+      cursor: url('./Assets/cursor/cursedhover.cur'), pointer;
+    }
+
+    #left-door {
+      left: 2%;
+      top: 25%;
+      width: 18%;
+      height: 45%;
+    }
+
+    #right-door {
+      right: 2%;
+      top: 25%;
+      width: 18%;
+      height: 45%;
+    }
+
+    #window {
+      top: 15%;
+      left: 42%;
+      width: 16%;
+      height: 35%;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Background image -->
+    <img src="./Assets/images/firstfloor.jpg" class="floor" alt="First Floor">
+
+    <!-- Clickable regions -->
+    <div id="left-door" class="hotspot" onclick="goTo('leftroom.html')"></div>
+    <div id="right-door" class="hotspot" onclick="goTo('rightroom.html')"></div>
+    <div id="window" class="hotspot" onclick="goTo('windowview.html')"></div>
+
+    <!-- Ambience audio -->
+    <audio id="bg-audio" autoplay loop>
+      <source src="./Assets/Sounds/ambience.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="glass-audio">
+  <source src="./Assets/Sounds/glass-break.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+  const bgAudio = document.getElementById("bg-audio");
+  const glassAudio = document.getElementById("glass-audio");
+
+  // Autoplay ambient audio after first click
+  document.addEventListener("click", () => {
+    bgAudio.volume = 0.4;
+    bgAudio.play().catch(() => {});
+  }, { once: true });
+
+  function goTo(page) {
+    if (page === 'windowview.html') {
+      glassAudio.play().catch(() => {});
+
+      // Delay navigation to let sound play
+      setTimeout(() => {
+        window.location.href = page;
+      }, 1200); // 1.2 seconds = ~duration of the glass break
+    } else {
+      window.location.href = page;
+    }
+  }
+</script>
+</body>
+</html>

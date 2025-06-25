@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escape Ending</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      cursor: url("./Assets/cursor/cursedcursor.cur"), auto;
+      background: black;
+    }
+
+    #ending-scene {
+      width: 100vw;
+      height: 100vh;
+      background: url('./Assets/images/outside.jpg') no-repeat center center;
+      background-size: cover;
+      position: relative;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+    }
+
+    #ghost {
+      position: absolute;
+      bottom: 10%;
+      right: 10%;
+      height: 50vh;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+      z-index: 10;
+    }
+
+    .text-overlay {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 2em;
+      font-family: 'Creepster', cursive;
+      z-index: 11;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+    }
+
+    #escaped-text {
+      top: 40%;
+    }
+
+    #final-text {
+      bottom: 5%;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      opacity: 0;
+      transition: opacity 2s ease-in;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <!-- Scene -->
+  <div id="ending-scene">
+    <img id="ghost" src="./Assets/images/ghost-fade.png" alt="Ghost Appears" />
+    <div id="escaped-text" class="text-overlay">You have escaped...</div>
+    <div id="final-text" class="text-overlay">But you brought her with you.</div>
+  </div>
+
+  <!-- Overlay for fade out -->
+  <div id="overlay"></div>
+
+  <!-- Sounds -->
+  <audio id="glass" src="./Assets/Sounds/glass-break.mp3" autoplay></audio>
+  <audio id="peaceful" src="./Assets/Sounds/peaceful.mp3" autoplay loop></audio>
+
+ <script>
+  const scene = document.getElementById("ending-scene");
+  const ghost = document.getElementById("ghost");
+  const escaped = document.getElementById("escaped-text");
+  const finalText = document.getElementById("final-text");
+  const overlay = document.getElementById("overlay");
+
+  const glass = document.getElementById("glass");
+  const peaceful = document.getElementById("peaceful");
+
+  // Glass break sound plays instantly
+  glass.play().catch(() => {});
+
+  // Wait for user interaction to start peaceful audio
+  document.addEventListener("click", () => {
+    peaceful.play().catch(() => {});
+  }, { once: true });
+
+  // Fade in scene after glass break
+  setTimeout(() => {
+    scene.style.opacity = 1;
+  }, 1000);
+
+  // Show "You have escaped..."
+  setTimeout(() => {
+    escaped.style.opacity = 1;
+  }, 3000);
+
+  // Hide escape text
+  setTimeout(() => {
+    escaped.style.opacity = 0;
+  }, 6000);
+
+  // Show ghost and final text
+  setTimeout(() => {
+    ghost.style.opacity = 1;
+    finalText.style.opacity = 1;
+  }, 7500);
+
+  // Optional fade to black
+  setTimeout(() => {
+    overlay.style.opacity = 1;
+  }, 11000);
+</script>
+</body>
+</html>
